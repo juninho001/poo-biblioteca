@@ -16,7 +16,15 @@ As principais entidades manipuladas pelo sistema são descritas a seguir. Podem 
 - Livro: ISBN, titulo, autor(es), editora, número de páginas, quantidade
 
 #Lógica de funcionamento do sistema:
-A lógica de funcionamento do sistema é a seguinte: O funcionário da biblioteca previamente cadastrado acessa o sistema, após isso são exibidas as funcionalidades: Cadastro de Livros, Cadastro de Usuários, Emprestar Livro e Devolver Livro. Caso o funcionário escolha Cadastro de Livros ou Cadastro de Usuários ele deve ser direcionado para formulários específicos para realizar o cadastro dessas entidades, bem como edições ou remoções. Caso o funcionário opte por emprestar livro, ele deve ser direcionado a uma tela, onde ele possa pesquisar por livros a partir do título ou ISBN. Após buscar o sistema deve indicar se o livro está disponível ou não. Caso esteja disponível ele pode optar por realizar empréstimo ao usuário e o sistema gera um comprovante informando o livro, o usuário e qual a data de entrega do mesmo. Se o funcionário optar por devolver livro, ele deverá ser direcionado para uma tela, onde seja possível pesquisar por empréstimos utilizando dados dos livros ou dos usuários, e então possa finalizar esse empréstimo.
+A lógica de funcionamento do sistema é a seguinte: O funcionário da biblioteca previamente cadastrado acessa o sistema, após isso são exibidas as funcionalidades: Cadastro de Livros, Cadastro de Usuários, Emprestar Livro e Devolver Livro. 
+
+Caso o funcionário escolha Cadastro de Livros ou Cadastro de Usuários ele deve ser direcionado para formulários específicos para realizar o cadastro dessas entidades, bem como edições ou remoções. 
+
+Caso o funcionário opte por emprestar livro, ele deve ser direcionado a uma tela, onde ele possa pesquisar por livros a partir do título ou ISBN. Após buscar o sistema deve indicar se o livro está disponível ou não. 
+
+Caso esteja disponível ele pode optar por realizar empréstimo ao usuário e o sistema gera um comprovante informando o livro, o usuário e qual a data de entrega do mesmo. 
+
+Se o funcionário optar por devolver livro, ele deverá ser direcionado para uma tela, onde seja possível pesquisar por empréstimos utilizando dados dos livros ou dos usuários, e então possa finalizar esse empréstimo.
 
 #Regras para empréstimos:
 
