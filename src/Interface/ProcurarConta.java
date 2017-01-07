@@ -11,63 +11,64 @@ import Dao.BibliotecaDAO;
 import Entidades.Aluno;
 import Entidades.Constans;
 import Entidades.Funcionario;
-import java.awt.Color;
 import java.awt.Frame;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class ProcurarConta extends javax.swing.JFrame {
-    
+
     BibliotecaDAO bibliotecaDAO;
     GeralControl geralControl;
     ProcurarContaControl procurarContaControl;
     Frame logadoFrame;
-    
+
     /**
      * Creates new form ProcurarConta
      */
     /**
-     * 
+     *
      * @throws IOException error de arquivos
      */
     public ProcurarConta() throws IOException {
         initComponents();
-         this.procurarContaControl = new ProcurarContaControl();
-         this.bibliotecaDAO = new BibliotecaDAO();
-         
-        for(String i : Constans.CARGOS){
+        this.procurarContaControl = new ProcurarContaControl();
+        this.bibliotecaDAO = new BibliotecaDAO();
+
+        for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        for(String i : Constans.SETORES){
+        
+        for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
     }
-    
-    public ProcurarConta(GeralControl geralControl, JFrame logadoFrame) throws IOException{
-        initComponents();    
+
+    public ProcurarConta(GeralControl geralControl, JFrame logadoFrame) throws IOException {
+        initComponents();
         this.procurarContaControl = new ProcurarContaControl();
         this.bibliotecaDAO = new BibliotecaDAO();
         this.geralControl = geralControl;
         this.logadoFrame = logadoFrame;
-        
-        for(String i : Constans.CARGOS){
+
+        for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        for(String i : Constans.SETORES){
+        
+        for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
-        for(String i : Constans.CURSOS){
+        
+        for (String i : Constans.CURSOS) {
             this.cursojComboBox.addItem(i);
         }
-        
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -383,6 +384,7 @@ public class ProcurarConta extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
+        
         this.salvarjButton.setEnabled(false);
         this.editarjButton.setEnabled(false);
         this.alterar_SenhajButton.setEnabled(false);
@@ -416,33 +418,36 @@ public class ProcurarConta extends javax.swing.JFrame {
 
     private void excluirjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirjButtonActionPerformed
 
-        if (this.procurarContaControl.getUsuario().equals(geralControl.getFuncionario_Logado())){
-            try{
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir sua conta?","Aviso", JOptionPane.WARNING_MESSAGE,JOptionPane.YES_NO_OPTION, null);
+        if (this.procurarContaControl.getUsuario().equals(geralControl.getFuncionario_Logado())) {
+            try {
+                int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir sua conta?", "Aviso", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION, null);
 
-                if(resposta == 0){
+                if (resposta == 0) {
                     this.bibliotecaDAO.removeFuncionario(this.geralControl.getFuncionario_Logado());
                     this.dispose();
                     this.logadoFrame.dispose();
                     LoginFrame novo = new LoginFrame();
                     novo.setVisible(true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Operação Cancelada");
                 }
+            
             } catch (IOException | ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);            }
-        }else{
+                JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
             try {
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir a conta: " +
-                    this.procurarContaControl.getUsuario().getNome() + " ?",
-                    "Aviso", JOptionPane.WARNING_MESSAGE,JOptionPane.YES_NO_OPTION, null);
-                if(resposta == 0){
-                    if(this.procurarContaControl.getUsuario() instanceof Funcionario){
+                int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir a conta: "
+                        + this.procurarContaControl.getUsuario().getNome() + " ?",
+                        "Aviso", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION, null);
+                
+                if (resposta == 0) {
+                    if (this.procurarContaControl.getUsuario() instanceof Funcionario) {
                         this.bibliotecaDAO.removeFuncionario((Funcionario) this.procurarContaControl.getUsuario());
-                    }else if(this.procurarContaControl.getUsuario() instanceof Aluno){
+                    } else if (this.procurarContaControl.getUsuario() instanceof Aluno) {
                         this.bibliotecaDAO.removeAluno((Aluno) this.procurarContaControl.getUsuario());
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Operação Cancelada");
                 }
             } catch (IOException | ClassNotFoundException ex) {
@@ -461,41 +466,40 @@ public class ProcurarConta extends javax.swing.JFrame {
     }//GEN-LAST:event_excluirjButtonActionPerformed
 
     private void salvarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarjButtonActionPerformed
-        if (this.nomejTextField1.getText() == null || this.nomejTextField1.getText().equals("") ||
-            this.matriculajFormattedTextField.getText() == null || this.matriculajFormattedTextField.getText().equals("")){
+        if (this.nomejTextField1.getText() == null || this.nomejTextField1.getText().equals("")
+                || this.matriculajFormattedTextField.getText() == null || this.matriculajFormattedTextField.getText().equals("")) {
             this.nomejTextField1.setText(this.procurarContaControl.getUsuario().getNome());
             this.matriculajFormattedTextField.setText(this.procurarContaControl.getUsuario().getMatricula());
             JOptionPane.showMessageDialog(null, "Os campos Nome, Matricula são obrigatorios!");
-        }else{
+        } else {
             try {
-                if (procurarContaControl.getUsuario() != null){
-                    if (procurarContaControl.getUsuario() instanceof Funcionario){
+                if (procurarContaControl.getUsuario() != null) {
+                    if (procurarContaControl.getUsuario() instanceof Funcionario) {
                         String cargo = (String) this.cargojComboBox.getSelectedItem();
                         String setor = (String) this.setorjComboBox.getSelectedItem();
                         Funcionario funcionarioPraDeletar = new Funcionario(cargo, setor,
-                            this.nomejTextField1.getText(), this.enderecojTextField1.getText(), this.emailjTextField1.getText(),
-                            this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField1.getText(),
-                            procurarContaControl.getUsuario().getSenha());
+                                this.nomejTextField1.getText(), this.enderecojTextField1.getText(), this.emailjTextField1.getText(),
+                                this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField1.getText(),
+                                procurarContaControl.getUsuario().getSenha());
 
-                        if (funcionarioPraDeletar.equals(this.geralControl.getFuncionario_Logado())){
+                        if (funcionarioPraDeletar.equals(this.geralControl.getFuncionario_Logado())) {
                             this.geralControl.setFuncionario_Logado(funcionarioPraDeletar);
                         }
 
                         this.bibliotecaDAO.editFuncionarios(funcionarioPraDeletar);
 
-                    }else if (procurarContaControl.getUsuario() instanceof Aluno){
+                    } else if (procurarContaControl.getUsuario() instanceof Aluno) {
                         String curso = (String) this.cursojComboBox.getSelectedItem();
-                        Aluno alunoPraDeletar = new Aluno(curso,this.nomejTextField1.getText(),
-                            this.enderecojTextField1.getText(), this.emailjTextField1.getText(),
-                            this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField1.getText(),
-                            procurarContaControl.getUsuario().getSenha());
+                        Aluno alunoPraDeletar = new Aluno(curso, this.nomejTextField1.getText(),
+                                this.enderecojTextField1.getText(), this.emailjTextField1.getText(),
+                                this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField1.getText(),
+                                procurarContaControl.getUsuario().getSenha());
 
                         this.bibliotecaDAO.editAlunos(alunoPraDeletar);
-
                     }
                 }
             } catch (IOException | ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Não existe nenhuma conta com esse CPF","Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não existe nenhuma conta com esse CPF", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
 
             this.salvarjButton.setEnabled(false);
@@ -540,11 +544,11 @@ public class ProcurarConta extends javax.swing.JFrame {
         this.enderecojTextField1.setEditable(true);
         this.emailjTextField1.setEditable(true);
         this.telefonejFormattedTextField1.setEditable(true);
-        
-        if(this.procurarContaControl.getUsuario() instanceof Funcionario){
+
+        if (this.procurarContaControl.getUsuario() instanceof Funcionario) {
             this.cargojComboBox.setEnabled(true);
             this.setorjComboBox.setEnabled(true);
-        }else{
+        } else {
             this.cursojComboBox.setEnabled(true);
         }
     }//GEN-LAST:event_editarjButtonActionPerformed
@@ -552,22 +556,24 @@ public class ProcurarConta extends javax.swing.JFrame {
     private void procurarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjButtonActionPerformed
         try {
             Funcionario aux = this.procurarContaControl.procurarFuncionario(this.CPFjFormattedTextField.getText());
-            if(aux != null){
+            
+            if (aux != null) {
                 procurarContaControl.setUsuario(aux);
                 this.nomejTextField1.setText(aux.getNome());
                 this.matriculajFormattedTextField.setText(aux.getMatricula());
                 this.emailjTextField1.setText(aux.getEmail());
                 this.enderecojTextField1.setText(aux.getEndereco());
                 this.telefonejFormattedTextField1.setText(aux.getTelefone());
-                
-                for(String i : Constans.CARGOS){
-                    if(aux.getCargo().equals(i)){
+
+                for (String i : Constans.CARGOS) {
+                    if (aux.getCargo().equals(i)) {
                         this.cargojComboBox.setSelectedItem(i);
                         break;
                     }
                 }
-                for(String i : Constans.SETORES){
-                    if(aux.getSetor().equals(i)){
+            
+                for (String i : Constans.SETORES) {
+                    if (aux.getSetor().equals(i)) {
                         this.setorjComboBox.setSelectedItem(i);
                         break;
                     }
@@ -575,27 +581,29 @@ public class ProcurarConta extends javax.swing.JFrame {
                 this.editarjButton.setEnabled(true);
                 this.excluirjButton.setEnabled(true);
                 this.alterar_SenhajButton.setEnabled(true);
-            }else{
+            } else {
                 Aluno aux2 = this.procurarContaControl.procurarAluno(this.CPFjFormattedTextField.getText());
-                if(aux2 != null){
+                
+                if (aux2 != null) {
                     procurarContaControl.setUsuario(aux2);
                     this.nomejTextField1.setText(aux2.getNome());
                     this.matriculajFormattedTextField.setText(aux2.getMatricula());
                     this.emailjTextField1.setText(aux2.getEmail());
                     this.enderecojTextField1.setText(aux2.getEndereco());
                     this.telefonejFormattedTextField1.setText(aux2.getTelefone());
-                    
-                    for(String i : Constans.CURSOS){
-                        if(aux2.getCurso().equals(i)){
+
+                    for (String i : Constans.CURSOS) {
+                        if (aux2.getCurso().equals(i)) {
                             this.cursojComboBox.setSelectedItem(i);
                             break;
                         }
                     }
-                this.editarjButton.setEnabled(true);
-                this.excluirjButton.setEnabled(true);
-                this.alterar_SenhajButton.setEnabled(true);    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Não existe nenhuma conta com esse CPF","Error", JOptionPane.INFORMATION_MESSAGE);
+                
+                    this.editarjButton.setEnabled(true);
+                    this.excluirjButton.setEnabled(true);
+                    this.alterar_SenhajButton.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não existe nenhuma conta com esse CPF", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
 

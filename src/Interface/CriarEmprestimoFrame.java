@@ -16,21 +16,24 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class CriarEmprestimoFrame extends javax.swing.JFrame {
+
     CriarEmprestimoControl criarEmprestimoControl;
     List<Exemplares> exemplares;
     UsuarioLoginFrame usuarioLoginFrame;
     Exemplares selectedExemplares;
     BibliotecaDAO bibliotecaDAO;
+
     /**
      * Creates new form FazerNovoEmprestimoFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivos 
+     *
+     * @throws IOException error de arquivos
      */
     public CriarEmprestimoFrame() throws IOException {
         initComponents();
@@ -153,14 +156,15 @@ public class CriarEmprestimoFrame extends javax.swing.JFrame {
 
     private void fazer_EmprestimojButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fazer_EmprestimojButtonActionPerformed
         Exemplares aux = (Exemplares) this.lista_De_LivrosjList.getSelectedValue();
-        if (aux != null && aux.getQuantidade_Disponivel() == 0){
-           JOptionPane.showMessageDialog(null, "Não existe Exemplares Disponiveis desse livro Nesse Instante !"); 
-        }else{
-            
+
+        if (aux != null && aux.getQuantidade_Disponivel() == 0) {
+            JOptionPane.showMessageDialog(null, "Não existe Exemplares Disponiveis desse livro Nesse Instante !");
+        } else {
             this.selectedExemplares = aux;
-            if(this.selectedExemplares == null){
+            
+            if (this.selectedExemplares == null) {
                 JOptionPane.showMessageDialog(null, "Para realizar um emprestimo é nessesário escolher um Livro Primeio");
-            }else{
+            } else {
                 try {
                     this.usuarioLoginFrame = new UsuarioLoginFrame(this.selectedExemplares, this.selectedExemplares, this.lista_De_LivrosjList, this.exemplares);
                     this.usuarioLoginFrame.setVisible(true);
@@ -168,47 +172,49 @@ public class CriarEmprestimoFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }    
+        }
     }//GEN-LAST:event_fazer_EmprestimojButtonActionPerformed
 
     private void procurarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjButtonActionPerformed
 
         try {
-            if (this.procurarjTextField.getText() == null || this.procurarjTextField.getText().equals("")){
+            if (this.procurarjTextField.getText() == null || this.procurarjTextField.getText().equals("")) {
                 this.exemplares = this.bibliotecaDAO.getExemplares();
-            }else{
+            } else {
                 this.exemplares = this.criarEmprestimoControl.procurarExemplar(this.procurarjTextField.getText());
             }
-                if (exemplares != null){
-         
+            
+            if (exemplares != null) {
                 DefaultListModel<Exemplares> dflist = new DefaultListModel<>();
-                for(Exemplares i: exemplares){
+                for (Exemplares i : exemplares) {
                     dflist.addElement(i);
                 }
                 this.lista_De_LivrosjList.setModel(dflist);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Porfavor Escolha um livro Valido");
-                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Porfavor Escolha um livro Valido");
+            }
+            
         } catch (IOException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_procurarjButtonActionPerformed
 
     private void lista_De_LivrosjListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_De_LivrosjListMouseClicked
-        if(this.lista_De_LivrosjList.getSelectedValue() != null){
+        if (this.lista_De_LivrosjList.getSelectedValue() != null) {
             this.estadojLabel.setEnabled(true);
             Exemplares aux = (Exemplares) this.lista_De_LivrosjList.getSelectedValue();
             this.estadojLabel.setText(aux.getEstado());
-            if(aux.getEstado().equals("INDISPONIVEL")){
+            
+            if (aux.getEstado().equals("INDISPONIVEL")) {
                 this.estadojLabel.setForeground(Color.RED);
-            }else{
+            } else {
                 this.estadojLabel.setForeground(Color.BLUE);
             }
-        }else{
+            
+        } else {
             this.estadojLabel.setEnabled(false);
             this.estadojLabel.setText("ESTADO");
             this.estadojLabel.setForeground(Color.BLACK);
-            
         }
     }//GEN-LAST:event_lista_De_LivrosjListMouseClicked
 

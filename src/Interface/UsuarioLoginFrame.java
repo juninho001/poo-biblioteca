@@ -5,7 +5,6 @@
  */
 package Interface;
 
-import Controllers.CriarEmprestimoControl;
 import Controllers.UsuarioLoginControl;
 import Dao.BibliotecaDAO;
 import Entidades.Aluno;
@@ -17,16 +16,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class UsuarioLoginFrame extends javax.swing.JFrame {
 
@@ -35,18 +32,19 @@ public class UsuarioLoginFrame extends javax.swing.JFrame {
     Exemplares exemplares;
     JList lista_de_Livros;
     List<Exemplares> livros;
-    
+
     /**
      * Creates new form UsuarioLoginFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivos 
+     *
+     * @throws IOException error de arquivos
      */
     public UsuarioLoginFrame() throws IOException {
         initComponents();
     }
-    public UsuarioLoginFrame(Exemplares exemplar, Exemplares exemplares,JList lista_De_Livros, List<Exemplares> livros) throws IOException {
+
+    public UsuarioLoginFrame(Exemplares exemplar, Exemplares exemplares, JList lista_De_Livros, List<Exemplares> livros) throws IOException {
         initComponents();
         this.bibliotecaDAO = new BibliotecaDAO(false);
         this.usuarioLoginControl = new UsuarioLoginControl();
@@ -172,64 +170,66 @@ public class UsuarioLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_senhajPasswordActionPerformed
 
     private void senhajPasswordapagarSenha2(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhajPasswordapagarSenha2
-        if(this.senhajPassword.getText().equals("")){
+        if (this.senhajPassword.getText().equals("")) {
             this.senhajPassword.setText("");
         }
     }//GEN-LAST:event_senhajPasswordapagarSenha2
 
     private void enviarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarjButtonActionPerformed
-        
+
         try {
             Usuario usuario = this.usuarioLoginControl.logar(this.matriculajFormattedTextField.getText(), this.senhajPassword.getText());
-            if (usuario != null){
-                if (!(usuario.getLimite_Livros() > usuario.getEmprestimo().size())){
+            if (usuario != null) {
+                if (!(usuario.getLimite_Livros() > usuario.getEmprestimo().size())) {
                     JOptionPane.showMessageDialog(null, "Você chegou no limite de Livros Emprestaveis ao mesmo Tempo");
-                }else{
+                } else {
                     usuario.atualiaEstado();
-                    if (usuario.getEstado().equals("BLOQUEADO")){
+
+                    if (usuario.getEstado().equals("BLOQUEADO")) {
                         Date aux = new Date();
-                        if (usuario.getBloqueadoAte() != null && usuario.getBloqueadoAte().getTime() > aux.getTime()){
+
+                        if (usuario.getBloqueadoAte() != null && usuario.getBloqueadoAte().getTime() > aux.getTime()) {
                             SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
                             JOptionPane.showMessageDialog(null, "Usuario bloqueado por Atraso na Devolução até: " + data.format(usuario.getBloqueadoAte()));
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "Existem Livros Com atraso de Entrega !");
                         }
-                    }else{
+                    } else {
                         Emprestimo emprestimo = new Emprestimo(usuario, new Exemplares(this.exemplares.getLivro(), 1));
                         usuario.getEmprestimo().add(emprestimo);
 
                         this.exemplares.setQuantidade_Disponivel(exemplares.getQuantidade_Disponivel() - 1);
-                        
+
                         try {
-                        if(usuario instanceof Funcionario){
-                            bibliotecaDAO.editFuncionarios((Funcionario) usuario);
-                        }else if (usuario instanceof Aluno ){    
-                            bibliotecaDAO.editAlunos((Aluno) usuario);
-                        }
-                        JOptionPane.showMessageDialog(null, emprestimo.toString());
-                        bibliotecaDAO.editExemplares(exemplares);
-                       
+                            if (usuario instanceof Funcionario) {
+                                bibliotecaDAO.editFuncionarios((Funcionario) usuario);
+                            } else if (usuario instanceof Aluno) {
+                                bibliotecaDAO.editAlunos((Aluno) usuario);
+                            }
+
+                            JOptionPane.showMessageDialog(null, emprestimo.toString());
+                            bibliotecaDAO.editExemplares(exemplares);
                         } catch (IOException | ClassNotFoundException ex) {
-                                JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-                            }
+                            JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    
-                        
-                         
-                        if (exemplares != null){
-                            DefaultListModel<Exemplares> dflist = new DefaultListModel<>();
-                            for(Exemplares i: livros){
-                                dflist.addElement(i);
-                            }
-                            this.lista_de_Livros.setModel(dflist);
+                    }
+
+                    if (exemplares != null) {
+                        DefaultListModel<Exemplares> dflist = new DefaultListModel<>();
+
+                        for (Exemplares i : livros) {
+                            dflist.addElement(i);
                         }
-                this.dispose();
+
+                        this.lista_de_Livros.setModel(dflist);
+                    }
+
+                    this.dispose();
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Login ou senha incorretos!");
             }
-            
-        
+
         } catch (IOException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }

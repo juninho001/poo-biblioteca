@@ -14,10 +14,12 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class AlterarSenhaFrame extends javax.swing.JFrame {
+
     private Usuario funcionario;
     BibliotecaDAO bibliotecaDAO;
 
@@ -180,51 +182,45 @@ public class AlterarSenhaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void salvarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarjButtonActionPerformed
-        if(this.senhaAntigajPasswordField.getText() == null || this.senhaAntigajPasswordField.getText().equals("")){
+        if (this.senhaAntigajPasswordField.getText() == null || this.senhaAntigajPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo de Antiga Senha Vazio");
-        }else if (this.novaSenhajPasswordField.getText() == null || this.novaSenhajPasswordField.getText().equals("") ||
-          this.confirmNovaSenhajPasswordField.getText() == null || this.confirmNovaSenhajPasswordField.getText().equals("")){
+        } else if (this.novaSenhajPasswordField.getText() == null || this.novaSenhajPasswordField.getText().equals("")
+                || this.confirmNovaSenhajPasswordField.getText() == null || this.confirmNovaSenhajPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campos de Nova Senha Vazios");
-        }else{
-                if (this.funcionario instanceof Funcionario){
-                if( (this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())) &&
-                    (this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText()))){
-                    try {
-                        this.funcionario.setSenha(this.confirmNovaSenhajPasswordField.getText());
-                        bibliotecaDAO.editFuncionarios((Funcionario) this.funcionario);
-                        this.dispose();
-                    } catch (IOException | ClassNotFoundException ex) {
-                        JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }else{
-                    if (!this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())){
-                        JOptionPane.showMessageDialog(null, "Senha Antiga Incorreta!", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if(!this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText())){
-                        JOptionPane.showMessageDialog(null, "Campos de Nova Senha Diferentes!", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error Desconhecido", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+        } else if (this.funcionario instanceof Funcionario) {
+            if ((this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha()))
+                    && (this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText()))) {
+                try {
+                    this.funcionario.setSenha(this.confirmNovaSenhajPasswordField.getText());
+                    bibliotecaDAO.editFuncionarios((Funcionario) this.funcionario);
+                    this.dispose();
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }else if (this.funcionario instanceof Aluno) {
-                if( (this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())) &&
-                    (this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText()))){
-                    try {
-                        this.funcionario.setSenha(this.confirmNovaSenhajPasswordField.getText());
-                        bibliotecaDAO.editAlunos((Aluno) this.funcionario);
-                        JOptionPane.showMessageDialog(null, "Senha Alterada Com Sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    } catch (IOException | ClassNotFoundException ex) {
-                        JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }else{
-                    if (!this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())){
-                        JOptionPane.showMessageDialog(null, "Senha Antiga Incorreta!", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if(!this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText())){
-                        JOptionPane.showMessageDialog(null, "Campos de Nova Senha Diferentes!", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error Desconhecido", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+            } else if (!this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())) {
+                JOptionPane.showMessageDialog(null, "Senha Antiga Incorreta!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText())) {
+                JOptionPane.showMessageDialog(null, "Campos de Nova Senha Diferentes!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error Desconhecido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (this.funcionario instanceof Aluno) {
+            if ((this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha()))
+                    && (this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText()))) {
+                try {
+                    this.funcionario.setSenha(this.confirmNovaSenhajPasswordField.getText());
+                    bibliotecaDAO.editAlunos((Aluno) this.funcionario);
+                    JOptionPane.showMessageDialog(null, "Senha Alterada Com Sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else if (!this.senhaAntigajPasswordField.getText().equals(funcionario.getSenha())) {
+                JOptionPane.showMessageDialog(null, "Senha Antiga Incorreta!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!this.novaSenhajPasswordField.getText().equals(this.confirmNovaSenhajPasswordField.getText())) {
+                JOptionPane.showMessageDialog(null, "Campos de Nova Senha Diferentes!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error Desconhecido", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_salvarjButtonActionPerformed
@@ -234,24 +230,24 @@ public class AlterarSenhaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_novaSenhajPasswordFieldActionPerformed
 
     private void senhaAntigajPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhaAntigajPasswordFieldKeyTyped
-       int tamanho = senhaAntigajPasswordField.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        int tamanho = senhaAntigajPasswordField.getText().length();
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_senhaAntigajPasswordFieldKeyTyped
 
     private void novaSenhajPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_novaSenhajPasswordFieldKeyTyped
-       int tamanho = novaSenhajPasswordField.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        int tamanho = novaSenhajPasswordField.getText().length();
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_novaSenhajPasswordFieldKeyTyped
 
     private void confirmNovaSenhajPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmNovaSenhajPasswordFieldKeyTyped
         int tamanho = confirmNovaSenhajPasswordField.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_confirmNovaSenhajPasswordFieldKeyTyped
 
     private void confirmNovaSenhajPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmNovaSenhajPasswordFieldActionPerformed

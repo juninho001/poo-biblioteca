@@ -5,14 +5,13 @@
  */
 package Entidades;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
-
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public interface Constans {
+
     int DIAS_BLOQUEADOS = 3;
     int DIAS_ENTREGA_ALUNO = 10;
     int DIAS_ENTREGA_FUNCIONARIO = 15;
@@ -21,6 +20,6 @@ public interface Constans {
     int TAMANHO_DE_SENHA = 16;
     String[] CARGOS = new String[]{"<none>", "BIBLIOTECÁRIO", "GERENTE", "SUPORTE TEC.", "ESTÁGIARIO"};
     String[] SETORES = new String[]{"<none>", "INFANTIL", "ADOLESCENTE", "ADULTO", "FINANCEIRO"};
-    String[] CURSOS = new String[]{"<none>", "ADS", "ODONTOLOGIA" , "ENGENHARIA", "MEDICINA", "FARMÁCIA" , "ARQUITETO", "ENG. DA COMPUTAÇÃO",
-    "CIÊ. DA COMPUTAÇÃO"};
+    String[] CURSOS = new String[]{"<none>", "ADS", "ODONTOLOGIA", "ENGENHARIA", "MEDICINA", "FARMÁCIA", "ARQUITETO", "ENG. DA COMPUTAÇÃO",
+        "CIÊ. DA COMPUTAÇÃO"};
 }

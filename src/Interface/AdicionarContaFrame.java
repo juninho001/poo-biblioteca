@@ -9,32 +9,32 @@ import Dao.BibliotecaDAO;
 import Entidades.Aluno;
 import Entidades.Constans;
 import Entidades.Funcionario;
-import Entidades.Usuario;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class AdicionarContaFrame extends javax.swing.JFrame {
-    
+
     boolean aluno = true;
     private BibliotecaDAO bibliotecaDAO;
-    
+
     public AdicionarContaFrame() throws IOException {
         initComponents();
         bibliotecaDAO = new BibliotecaDAO();
-        
-        for(String i : Constans.CARGOS){
+
+        for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        for(String i : Constans.SETORES){
+
+        for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
-        for(String i : Constans.CURSOS){
+
+        for (String i : Constans.CURSOS) {
             this.cursojComboBox.addItem(i);
         }
     }
@@ -386,10 +386,10 @@ public class AdicionarContaFrame extends javax.swing.JFrame {
         this.cargojComboBox.setEnabled(false);
         this.setorjComboBox.setEnabled(false);
         this.cursojComboBox.setEnabled(true);
-        
+
         this.cargojComboBox.setSelectedItem("<none>");
         this.setorjComboBox.setSelectedItem("<none>");
-        
+
         this.aluno = true;
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
@@ -397,10 +397,9 @@ public class AdicionarContaFrame extends javax.swing.JFrame {
         this.cargojComboBox.setEnabled(true);
         this.setorjComboBox.setEnabled(true);
         this.cursojComboBox.setEnabled(false);
-        
+
         this.cursojComboBox.setSelectedItem("<none>");
- 
-        
+
         this.aluno = false;
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
@@ -421,43 +420,44 @@ public class AdicionarContaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_senhajPasswordFieldActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(this.nomejTextField1.getText() == null || this.nomejTextField1.getText().equals("")){
+        if (this.nomejTextField1.getText() == null || this.nomejTextField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "O Campo Nome é Obrigatório!");
-        }else if(this.matriculajFormattedTextField.getText() == null || this.matriculajFormattedTextField.getText().equals("")){
+        } else if (this.matriculajFormattedTextField.getText() == null || this.matriculajFormattedTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "O Campo Matricula é Obrigatório!");
-        }else if(this.CPFjFormattedTextField.getText() == null || this.CPFjFormattedTextField.getText().equals("")){
+        } else if (this.CPFjFormattedTextField.getText() == null || this.CPFjFormattedTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "O Campo CPF é Obrigatório!");
-        }else if(this.senhajPasswordField.getText() == null || this.senhajPasswordField.getText().equals("") ||
-                this.outraSenhajPasswordField.getText() == null || this.outraSenhajPasswordField.getText().equals("")){
+        } else if (this.senhajPasswordField.getText() == null || this.senhajPasswordField.getText().equals("")
+                || this.outraSenhajPasswordField.getText() == null || this.outraSenhajPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Os Campos de Senhas são Obrigatórios");
-        }else if(!this.senhajPasswordField.getText().equals(this.outraSenhajPasswordField.getText())){
+        } else if (!this.senhajPasswordField.getText().equals(this.outraSenhajPasswordField.getText())) {
             this.senhajPasswordField.setText("");
             this.outraSenhajPasswordField.setText("");
             JOptionPane.showMessageDialog(null, "Os Campos de Senhas devem ser iguais!");
-        }else{
-            if(aluno){
+        } else {
+            if (aluno) {
                 String curso = (String) cursojComboBox.getSelectedItem();
-   
-                Aluno novoAluno = new Aluno(curso, this.nomejTextField1.getText(), 
+
+                Aluno novoAluno = new Aluno(curso, this.nomejTextField1.getText(),
                         this.enderecojTextField1.getText(), this.emailjTextField1.getText(), this.matriculajFormattedTextField.getText(),
-                        this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField.getText(),this.senhajPasswordField.getText());
+                        this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField.getText(), this.senhajPasswordField.getText());
                 try {
                     this.bibliotecaDAO.addAluno(novoAluno);
                 } catch (IOException | ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 String cargo = (String) cargojComboBox.getSelectedItem();
                 String setor = (String) setorjComboBox.getSelectedItem();
                 Funcionario novoFuncionario = new Funcionario(cargo, setor,
                         this.nomejTextField1.getText(), this.enderecojTextField1.getText(), this.emailjTextField1.getText(),
                         this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField.getText(),
                         this.senhajPasswordField.getText());
+
                 try {
                     this.bibliotecaDAO.addFuncionario(novoFuncionario);
                 } catch (IOException | ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-                }   
+                }
             }
             this.nomejTextField1.setText("");
             this.matriculajFormattedTextField.setText("");
@@ -474,17 +474,17 @@ public class AdicionarContaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void senhajPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhajPasswordFieldKeyTyped
-       int tamanho = senhajPasswordField.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        int tamanho = senhajPasswordField.getText().length();
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_senhajPasswordFieldKeyTyped
 
     private void outraSenhajPasswordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outraSenhajPasswordFieldKeyTyped
-       int tamanho = outraSenhajPasswordField.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        int tamanho = outraSenhajPasswordField.getText().length();
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_outraSenhajPasswordFieldKeyTyped
 
     private void enderecojTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enderecojTextField1ActionPerformed

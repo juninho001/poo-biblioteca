@@ -13,16 +13,19 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class TodosLivrosEmprestados extends javax.swing.JFrame {
+
     BibliotecaDAO bibliotecaDAO;
+
     /**
      * Creates new form NewJFrame
      */
     /**
-     * 
+     *
      * @throws IOException error de arquivos
      * @throws ClassNotFoundException error de classes
      */
@@ -30,22 +33,26 @@ public class TodosLivrosEmprestados extends javax.swing.JFrame {
         initComponents();
         bibliotecaDAO = new BibliotecaDAO();
     }
-    
+
     /**
-     * Esse metodo imprime em uma JLabel todos os livros emprestados do sistemas 
-     * @param listaTotal  Lista com todos os emprestimos
+     * Esse metodo imprime em uma JLabel todos os livros emprestados do sistemas
+     *
+     * @param listaTotal Lista com todos os emprestimos
      * @throws IOException error de arquivos
      * @throws ClassNotFoundException error de classes
      */
-    public TodosLivrosEmprestados( List<Emprestimo> listaTotal) throws IOException, ClassNotFoundException {
+    public TodosLivrosEmprestados(List<Emprestimo> listaTotal) throws IOException, ClassNotFoundException {
         initComponents();
         bibliotecaDAO = new BibliotecaDAO();
         List<Emprestimo> emp = listaTotal;
-        if(emp != null){
+        
+        if (emp != null) {
             DefaultListModel<Emprestimo> aux = new DefaultListModel<>();
-                for(Emprestimo i : emp){
-                    aux.addElement(i);
-                }
+            
+            for (Emprestimo i : emp) {
+                aux.addElement(i);
+            }
+            
             this.jList1.setModel(aux);
         }
     }

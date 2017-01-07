@@ -13,27 +13,28 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class LogadoFrame extends javax.swing.JFrame {
-    
+
     private GeralControl geralControl;
     private LogadoFrame logadoFrame;
     private JFrame logadoJFrame;
-    
+
     /**
      * Creates new form MainFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivoss 
+     *
+     * @throws IOException error de arquivoss
      */
     public LogadoFrame() throws IOException {
         initComponents();
     }
 
-    LogadoFrame(GeralControl geralControl, JFrame logadoJFrame){
+    LogadoFrame(GeralControl geralControl, JFrame logadoJFrame) {
         initComponents();
         this.geralControl = geralControl;
         this.logadoJFrame = logadoJFrame;
@@ -219,39 +220,43 @@ public class LogadoFrame extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         AdicionarContaFrame adicionarContaFrame;
+        
         try {
             adicionarContaFrame = new AdicionarContaFrame();
             adicionarContaFrame.setVisible(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         this.setVisible(false);
         LoginFrame login;
+        
         try {
             login = new LoginFrame();
             login.setVisible(true);
         } catch (IOException ex) {
-             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         PerfilFrame perfilFrame;
+        
         try {
             perfilFrame = new PerfilFrame(this.geralControl);
             perfilFrame.setVisible(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         AdicionarExemplarFrame adicionarExemplarFrame;
+        
         try {
             adicionarExemplarFrame = new AdicionarExemplarFrame();
             adicionarExemplarFrame.setVisible(true);
@@ -262,6 +267,7 @@ public class LogadoFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         ProcurarLivroFrame procurarLivroFrame;
+        
         try {
             procurarLivroFrame = new ProcurarLivroFrame();
             procurarLivroFrame.setVisible(true);
@@ -274,6 +280,7 @@ public class LogadoFrame extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         ProcurarConta procura;
+        
         try {
             procura = new ProcurarConta(this.geralControl, this);
             procura.setVisible(true);
@@ -284,17 +291,19 @@ public class LogadoFrame extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         CriarEmprestimoFrame criarEmprestimoFrame;
+        
         try {
             criarEmprestimoFrame = new CriarEmprestimoFrame();
             criarEmprestimoFrame.setVisible(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         FinalizarEmprestimoFrame finalizarEmprestimoFrame;
+        
         try {
             finalizarEmprestimoFrame = new FinalizarEmprestimoFrame();
             finalizarEmprestimoFrame.setVisible(true);
@@ -363,5 +372,5 @@ public class LogadoFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-    
+
 }

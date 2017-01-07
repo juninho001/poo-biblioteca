@@ -19,24 +19,26 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class ProcurarLivroFrame extends javax.swing.JFrame {
-    
+
     BibliotecaDAO bibliotecaDAO;
     ProcurarLivroControl procurarLivroControl;
     Exemplares exemplares;
     int numeroEmprestados;
     List<Emprestimo> listaTotal;
     boolean quantidadesIguais;
-    
+
     private AdicionarExemplarControl adicionarExemplarControl;
+
     /**
      * Creates new form ProcurarLivroFrame
      */
     /**
-     * 
+     *
      * @throws IOException error de arquivos
      * @throws ClassNotFoundException error de classe
      */
@@ -46,22 +48,25 @@ public class ProcurarLivroFrame extends javax.swing.JFrame {
         this.procurarLivroControl = new ProcurarLivroControl();
         this.adicionarExemplarControl = new AdicionarExemplarControl();
         this.listaTotal = pegarTodosEmprestimos();
-        if(this.listaTotal.size() > 0){
+
+        if (this.listaTotal.size() > 0) {
             this.exibir_Lista_EmprestadosjButton.setEnabled(true);
         }
     }
-    
-    public List<Emprestimo> pegarTodosEmprestimos() throws IOException, ClassNotFoundException{
+
+    public List<Emprestimo> pegarTodosEmprestimos() throws IOException, ClassNotFoundException {
         List<Aluno> alunos = bibliotecaDAO.getAnulos();
         List<Funcionario> funcionarios = bibliotecaDAO.getFuncionarios();
         List<Emprestimo> emprestimos = new ArrayList<>();
-        
-        for(Aluno i : alunos){
+
+        for (Aluno i : alunos) {
             emprestimos.addAll(i.getEmprestimo());
         }
-        for(Funcionario i : funcionarios){
+
+        for (Funcionario i : funcionarios) {
             emprestimos.addAll(i.getEmprestimo());
         }
+
         return emprestimos;
     }
 
@@ -381,54 +386,57 @@ public class ProcurarLivroFrame extends javax.swing.JFrame {
         this.salvarjButton.setEnabled(true);
         this.excluirjButton.setEnabled(false);
         this.editarjButton.setEnabled(false);
-        
+
         this.pesquisajTextField.setEditable(false);
         this.titulojTextField.setEditable(true);
         this.editorajTextField.setEditable(true);
-        
+
         this.numero_De_PagjFormattedTextField.setEditable(true);
         this.descricaojTextArea.setEditable(true);
         this.altoresjTextArea.setEditable(true);
         numero_De_ExempjFormattedTextField1.setEditable(true);
-        
+
     }//GEN-LAST:event_editarjButtonActionPerformed
 
     private void procurarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjButtonActionPerformed
-        if (this.pesquisajTextField.getText() == null || this.pesquisajTextField.getText().equals("")){
+        if (this.pesquisajTextField.getText() == null || this.pesquisajTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite um Titulo ou ISBN para Pesquisar");
-        }else{
+        } else {
             try {
                 this.exemplares = this.procurarLivroControl.procurarLivro(this.pesquisajTextField.getText());
-                if (this.exemplares != null){
-                    
+
+                if (this.exemplares != null) {
+
                     this.titulojTextField.setText(this.exemplares.getLivro().getTitulo());
                     this.editorajTextField.setText(this.exemplares.getLivro().getEditora());
                     this.ISBNjTextField.setText(this.exemplares.getLivro().getISBN());
-                    this.numero_De_PagjFormattedTextField.setText(""+this.exemplares.getLivro().getNumero_Paginas());
-                    this.numero_De_ExempjFormattedTextField1.setText(""+this.exemplares.getQuantidade());
-                    this.numero_De_Exemplares_DispjFormattedTextFiel.setText(""+this.exemplares.getQuantidade_Disponivel());
+                    this.numero_De_PagjFormattedTextField.setText("" + this.exemplares.getLivro().getNumero_Paginas());
+                    this.numero_De_ExempjFormattedTextField1.setText("" + this.exemplares.getQuantidade());
+                    this.numero_De_Exemplares_DispjFormattedTextFiel.setText("" + this.exemplares.getQuantidade_Disponivel());
                     this.descricaojTextArea.setText(this.exemplares.getLivro().getDescricao());
                     String autoria = "";
-                    for (String i : this.exemplares.getLivro().getAutores()){
-                        autoria += i +";";
-                    }
-                    this.altoresjTextArea.setText(autoria);
                     
+                    for (String i : this.exemplares.getLivro().getAutores()) {
+                        autoria += i + ";";
+                    }
+                    
+                    this.altoresjTextArea.setText(autoria);
                     quantidadesIguais = false;
                     numeroEmprestados = Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()) - Integer.parseInt(this.numero_De_Exemplares_DispjFormattedTextFiel.getText());
-                    
+
                     this.editarjButton.setEnabled(true);
-                    if(this.exemplares.getQuantidade() == this.exemplares.getQuantidade_Disponivel()){
+                    
+                    if (this.exemplares.getQuantidade() == this.exemplares.getQuantidade_Disponivel()) {
                         this.quantidadesIguais = true;
                         this.excluirjButton.setEnabled(true);
                     }
-                    if(!(this.exemplares.getQuantidade() == this.exemplares.getQuantidade_Disponivel())){
+                    
+                    if (!(this.exemplares.getQuantidade() == this.exemplares.getQuantidade_Disponivel())) {
                         this.exibir_Lista_EmprestadosjButton.setEnabled(true);
                     }
-                }else{
+                } else {
                     this.pesquisajTextField.setText("");
                 }
-                
             } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -444,72 +452,91 @@ public class ProcurarLivroFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editorajTextFieldjTextField5ActionPerformed
 
     private void excluirjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirjButtonActionPerformed
+        int respota = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir esses Exemplares? ", "Excluir Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         
-        int respota = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir esses Exemplares? ", "Excluir Confirm", JOptionPane.YES_NO_OPTION , JOptionPane.WARNING_MESSAGE );
-        if(respota == 0){
+        if (respota == 0) {
             try {
                 this.bibliotecaDAO.removeExemplares(this.exemplares);
-                this.titulojTextField.setEditable(false);                           this.titulojTextField.setText("");
-                this.ISBNjTextField.setEditable(false);                             this.ISBNjTextField.setText("");
-                this.editorajTextField.setEditable(false);                          this.editorajTextField.setText("");
-                this.numero_De_PagjFormattedTextField.setEditable(false);                this.numero_De_PagjFormattedTextField.setText("");
-                this.numero_De_ExempjFormattedTextField1.setEditable(false);                this.numero_De_ExempjFormattedTextField1.setText("");
-                this.numero_De_Exemplares_DispjFormattedTextFiel.setEditable(false);    this.numero_De_Exemplares_DispjFormattedTextFiel.setText(""); 
-                this.descricaojTextArea.setEditable(false);                         this.descricaojTextArea.setText("");
-                this.pesquisajTextField.setEditable(true);                          this.pesquisajTextField.setText("");
-                this.altoresjTextArea.setEditable(false);                           this.altoresjTextArea.setText("");
-        
+                this.titulojTextField.setEditable(false);
+                this.titulojTextField.setText("");
+                this.ISBNjTextField.setEditable(false);
+                this.ISBNjTextField.setText("");
+                this.editorajTextField.setEditable(false);
+                this.editorajTextField.setText("");
+                this.numero_De_PagjFormattedTextField.setEditable(false);
+                this.numero_De_PagjFormattedTextField.setText("");
+                this.numero_De_ExempjFormattedTextField1.setEditable(false);
+                this.numero_De_ExempjFormattedTextField1.setText("");
+                this.numero_De_Exemplares_DispjFormattedTextFiel.setEditable(false);
+                this.numero_De_Exemplares_DispjFormattedTextFiel.setText("");
+                this.descricaojTextArea.setEditable(false);
+                this.descricaojTextArea.setText("");
+                this.pesquisajTextField.setEditable(true);
+                this.pesquisajTextField.setText("");
+                this.altoresjTextArea.setEditable(false);
+                this.altoresjTextArea.setText("");
+
                 this.salvarjButton.setEnabled(false);
                 this.editarjButton.setEnabled(false);
                 this.procurarjButton.setEnabled(true);
                 this.exibir_Lista_EmprestadosjButton.setEnabled(false);
                 this.excluirjButton.setEnabled(false);
-            
+
             } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Operação Cancelada");
         }
     }//GEN-LAST:event_excluirjButtonActionPerformed
 
     private void salvarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarjButtonActionPerformed
         try {
-            if( (!quantidadesIguais) && 
-(!(Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()) > this.exemplares.getQuantidade())) &&
-(this.exemplares.getQuantidade_Disponivel() - Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText())) <= this.numeroEmprestados){
-                    JOptionPane.showMessageDialog(null, "Não é possivel setar uma quantidade de livros menor que a quantidade Disponivel");
-            }else{  
+            if ((!quantidadesIguais)
+                    && (!(Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()) > this.exemplares.getQuantidade()))
+                    && (this.exemplares.getQuantidade_Disponivel() - Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText())) <= this.numeroEmprestados) {
+                JOptionPane.showMessageDialog(null, "Não é possivel setar uma quantidade de livros menor que a quantidade Disponivel");
+            } else {
                 Livro livroEditado = new Livro(this.ISBNjTextField.getText(),
-                this.titulojTextField.getText(),
-                this.adicionarExemplarControl.separar_Altores(this.altoresjTextArea.getText()), 
-                this.editorajTextField.getText(),
-                this.descricaojTextArea.getText(), 
-                Integer.parseInt(this.numero_De_PagjFormattedTextField.getText()));
-                
+                        this.titulojTextField.getText(),
+                        this.adicionarExemplarControl.separar_Altores(this.altoresjTextArea.getText()),
+                        this.editorajTextField.getText(),
+                        this.descricaojTextArea.getText(),
+                        Integer.parseInt(this.numero_De_PagjFormattedTextField.getText()));
+
                 Exemplares ex = new Exemplares(livroEditado, Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()));
-                
-                if(quantidadesIguais){
+
+                if (quantidadesIguais) {
                     ex.setQuantidade(Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()));
-                }else{
-                    ex.setQuantidade_Disponivel( Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()) - numeroEmprestados);    
+                } else {
+                    ex.setQuantidade_Disponivel(Integer.parseInt(this.numero_De_ExempjFormattedTextField1.getText()) - numeroEmprestados);
                 }
+                
                 bibliotecaDAO.editExemplares(ex);
             }
         } catch (IOException | ClassNotFoundException | NumberFormatException ex1) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        this.titulojTextField.setEditable(false);                           this.titulojTextField.setText("");
-        this.ISBNjTextField.setEditable(false);                             this.ISBNjTextField.setText("");
-        this.editorajTextField.setEditable(false);                          this.editorajTextField.setText("");
-        this.numero_De_PagjFormattedTextField.setEditable(false);                this.numero_De_PagjFormattedTextField.setText("");
-        this.numero_De_ExempjFormattedTextField1.setEditable(false);                this.numero_De_ExempjFormattedTextField1.setText("");
-        this.numero_De_Exemplares_DispjFormattedTextFiel.setEditable(false);    this.numero_De_Exemplares_DispjFormattedTextFiel.setText(""); 
-        this.descricaojTextArea.setEditable(false);                         this.descricaojTextArea.setText("");
-        this.pesquisajTextField.setEditable(true);                          this.pesquisajTextField.setText("");
-        this.altoresjTextArea.setEditable(false);                           this.altoresjTextArea.setText("");
-        
+
+        this.titulojTextField.setEditable(false);
+        this.titulojTextField.setText("");
+        this.ISBNjTextField.setEditable(false);
+        this.ISBNjTextField.setText("");
+        this.editorajTextField.setEditable(false);
+        this.editorajTextField.setText("");
+        this.numero_De_PagjFormattedTextField.setEditable(false);
+        this.numero_De_PagjFormattedTextField.setText("");
+        this.numero_De_ExempjFormattedTextField1.setEditable(false);
+        this.numero_De_ExempjFormattedTextField1.setText("");
+        this.numero_De_Exemplares_DispjFormattedTextFiel.setEditable(false);
+        this.numero_De_Exemplares_DispjFormattedTextFiel.setText("");
+        this.descricaojTextArea.setEditable(false);
+        this.descricaojTextArea.setText("");
+        this.pesquisajTextField.setEditable(true);
+        this.pesquisajTextField.setText("");
+        this.altoresjTextArea.setEditable(false);
+        this.altoresjTextArea.setText("");
+
         this.salvarjButton.setEnabled(false);
         this.editarjButton.setEnabled(false);
         this.procurarjButton.setEnabled(true);
@@ -518,6 +545,7 @@ public class ProcurarLivroFrame extends javax.swing.JFrame {
 
     private void exibir_Lista_EmprestadosjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exibir_Lista_EmprestadosjButtonActionPerformed
         TodosLivrosEmprestados todosLivrosEmprestados;
+        
         try {
             todosLivrosEmprestados = new TodosLivrosEmprestados(this.listaTotal);
             todosLivrosEmprestados.setVisible(true);
@@ -526,7 +554,6 @@ public class ProcurarLivroFrame extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-         
     }//GEN-LAST:event_exibir_Lista_EmprestadosjButtonActionPerformed
 
     private void titulojTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titulojTextFieldActionPerformed

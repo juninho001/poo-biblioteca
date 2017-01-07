@@ -7,13 +7,15 @@ package Entidades;
 
 /**
  * @version 1.0
- * @author Wensttay 
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class Aluno extends Usuario {
+
     private String curso;
-    
+
     /**
-     * 
+     *
      * @param curso - O curso do aluno
      * @param nome - O nome do Aluno
      * @param endereco - O endereço do Aluno
@@ -21,33 +23,32 @@ public class Aluno extends Usuario {
      * @param matricula - A matricula do Aluno
      * @param CPF - O CPF do aluno
      * @param telefone - O felefone do Aluno
-     * @param senha  - A senha do Aluno
+     * @param senha - A senha do Aluno
      */
-    public Aluno(   String curso,      String nome,        String endereco,        String email,      
-                    String matricula,  String CPF,         String telefone,        String senha) {
-        
+    public Aluno(String curso, String nome, String endereco, String email,
+            String matricula, String CPF, String telefone, String senha) {
         super(nome, endereco, email, matricula, CPF, telefone, senha, Constans.DIAS_ENTREGA_ALUNO);
         this.curso = curso;
     }
-    
+
     /**
-     * 
+     *
      * @param outro o outro aluno a ser comparado
      * @return true se forem iguais e false se forem diferentes
      */
     @Override
-    public boolean equals(Object outro){
+    public boolean equals(Object outro) {
         return super.equals(outro);
     }
-    
+
     /**
-     * 
-     * @return retorna uma descrição completa do Aluno 
+     *
+     * @return retorna uma descrição completa do Aluno
      */
     @Override
-    public String toString(){
-        return super.toString() +
-               "Curso: " + this.getCurso() + "\n";
+    public String toString() {
+        return super.toString()
+                + "Curso: " + this.getCurso() + "\n";
     }
 
     /**

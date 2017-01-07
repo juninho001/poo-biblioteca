@@ -10,39 +10,45 @@ import java.util.List;
 
 /**
  * @version 1.0
- * @author Wensttay
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class LoginControl {
-    
+
     /**
-     * 
+     *
      * @param login login de funcionario a ser logado
      * @param senha senha de funcionario a ser logado
-     * @param funcionario_List  lista de funcionarios a ser procurado o usuario com login e senhas iguais aos passados
-     * @return retorna o funcionario caso ele exista, caso contrario retorna null
+     * @param funcionario_List lista de funcionarios a ser procurado o usuario
+     * com login e senhas iguais aos passados
+     * @return retorna o funcionario caso ele exista, caso contrario retorna
+     * null
      */
-    public Funcionario logar_Funcionario (String login, String senha, List<Funcionario> funcionario_List){
-        for(Funcionario i : funcionario_List){
-            if(i.getMatricula().equals(login) && i.getSenha().equals(senha)){
+    public Funcionario logar_Funcionario(String login, String senha, List<Funcionario> funcionario_List) {
+        for (Funcionario i : funcionario_List) {
+            if (i.getMatricula().equals(login) && i.getSenha().equals(senha)) {
                 return i;
             }
         }
+        
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param login login de funcionario a ser procurado
      * @param senha senha de funcionario a ser procurado
-     * @param funcionario_List lista de funcionarios a ser procurado o usuario com login e senhas iguais aos passados
+     * @param funcionario_List lista de funcionarios a ser procurado o usuario
+     * com login e senhas iguais aos passados
      * @return retorna o true caso ele exista, caso contrario retorna false
      */
-    public boolean funcionario_Existe (String login, String senha, List<Funcionario> funcionario_List){
-        for(Funcionario i : funcionario_List){
-            if((i.getMatricula().equals(login) && !i.getSenha().equals(senha))){
+    public boolean funcionario_Existe(String login, String senha, List<Funcionario> funcionario_List) {
+        for (Funcionario i : funcionario_List) {
+            if ((i.getMatricula().equals(login) && !i.getSenha().equals(senha))) {
                 return true;
             }
         }
+        
         return false;
     }
 }

@@ -10,20 +10,18 @@ import Dao.BibliotecaDAO;
 import Entidades.Constans;
 import Entidades.Funcionario;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class PerfilFrame extends javax.swing.JFrame {
 
     private GeralControl geralControl;
     BibliotecaDAO bibliotecaDAO;
+
     /**
      * Creates new form perfilFrame
      */
@@ -41,21 +39,24 @@ public class PerfilFrame extends javax.swing.JFrame {
         this.enderecojTextField.setText(this.geralControl.getFuncionario_Logado().getEndereco());
         this.telefonejFormattedTextField.setText(this.geralControl.getFuncionario_Logado().getTelefone());
         this.bibliotecaDAO = new BibliotecaDAO();
-        
-        for(String i : Constans.CARGOS){
+
+        for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        for(String i : Constans.SETORES){
+        
+        for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
-        for(String i : Constans.CARGOS){
-            if(this.geralControl.getFuncionario_Logado().getCargo().equals(i)){
+        
+        for (String i : Constans.CARGOS) {
+            if (this.geralControl.getFuncionario_Logado().getCargo().equals(i)) {
                 this.cargojComboBox.setSelectedItem(i);
                 break;
             }
         }
-        for(String i : Constans.SETORES){
-            if(this.geralControl.getFuncionario_Logado().getSetor().equals(i)){
+        
+        for (String i : Constans.SETORES) {
+            if (this.geralControl.getFuncionario_Logado().getSetor().equals(i)) {
                 this.setorjComboBox.setSelectedItem(i);
                 break;
             }
@@ -358,27 +359,26 @@ public class PerfilFrame extends javax.swing.JFrame {
         this.matriculajFormattedTextField.setEditable(false);
         this.emailjTextField.setEditable(false);
         this.enderecojTextField.setEditable(false);
-        this.CPFjFormattedTextField.setEditable(false);           
+        this.CPFjFormattedTextField.setEditable(false);
         this.cargojComboBox.setEnabled(false);
         this.setorjComboBox.setEnabled(false);
-        
-        if( (this.nomejTextField.getText() == null) || (this.nomejTextField.getText().equals("")) ||
-            (this.matriculajFormattedTextField.getText() == null) || (this.matriculajFormattedTextField.getText().equals(""))){
-            
+
+        if ((this.nomejTextField.getText() == null) || (this.nomejTextField.getText().equals(""))
+                || (this.matriculajFormattedTextField.getText() == null) || (this.matriculajFormattedTextField.getText().equals(""))) {
+
             JOptionPane.showMessageDialog(null, "Os campos Nome e Matricula são obrigatorios!");
             this.nomejTextField.setText(geralControl.getFuncionario_Logado().getNome());
             this.matriculajFormattedTextField.setText(geralControl.getFuncionario_Logado().getMatricula());
-        
-        }else{
+        } else {
             String cargo = (String) this.cargojComboBox.getSelectedItem();
             String setor = (String) this.setorjComboBox.getSelectedItem();
-            System.out.println(setor);
-          
+
             Funcionario aux = new Funcionario(cargo, setor,
-                this.nomejTextField.getText(), this.enderecojTextField.getText(), this.emailjTextField.getText(),
-                this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField.getText(),
-                this.geralControl.getFuncionario_Logado().getSenha());
-                this.geralControl.setFuncionario_Logado(aux);
+                    this.nomejTextField.getText(), this.enderecojTextField.getText(), this.emailjTextField.getText(),
+                    this.matriculajFormattedTextField.getText(), this.CPFjFormattedTextField.getText(), this.telefonejFormattedTextField.getText(),
+                    this.geralControl.getFuncionario_Logado().getSenha());
+            this.geralControl.setFuncionario_Logado(aux);
+            
             try {
                 this.bibliotecaDAO.editFuncionarios(aux);
             } catch (IOException | ClassNotFoundException ex) {
@@ -392,7 +392,7 @@ public class PerfilFrame extends javax.swing.JFrame {
         this.editarjButton.setEnabled(false);
         this.alterar_SenhajButton.setEnabled(false);
         this.salvarjButton.setEnabled(true);
-
+        
         this.nomejTextField.setEditable(true);
         this.matriculajFormattedTextField.setEditable(true);
         this.emailjTextField.setEditable(true);
@@ -400,7 +400,7 @@ public class PerfilFrame extends javax.swing.JFrame {
         this.telefonejFormattedTextField.setEditable(true);
         this.cargojComboBox.setEnabled(true);
         this.setorjComboBox.setEnabled(true);
-  
+
     }//GEN-LAST:event_editarjButtonActionPerformed
 
     private void nomejTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomejTextFieldActionPerformed
@@ -413,13 +413,13 @@ public class PerfilFrame extends javax.swing.JFrame {
 
     private void alterar_SenhajButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterar_SenhajButtonActionPerformed
         AlterarSenhaFrame alterarSenhaFrame;
+        
         try {
             alterarSenhaFrame = new AlterarSenhaFrame(this.geralControl.getFuncionario_Logado());
             alterarSenhaFrame.setVisible(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_alterar_SenhajButtonActionPerformed
 
     private void matriculajFormattedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matriculajFormattedTextFieldActionPerformed

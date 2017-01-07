@@ -13,8 +13,6 @@ import Entidades.Emprestimo;
 import Entidades.Exemplares;
 import Entidades.Funcionario;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.PopupMenu;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,20 +22,22 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class FinalizarEmprestimoFrame extends javax.swing.JFrame {
-    
+
     FinalizarEmprestimoControl finalizarEmprestimoControl;
     List<Emprestimo> emprestimos;
     BibliotecaDAO bibliotecaDAO;
+
     /**
      * Creates new form FinalizarEmprestimoJFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivos 
+     *
+     * @throws IOException error de arquivos
      */
     public FinalizarEmprestimoFrame() throws IOException {
         initComponents();
@@ -203,92 +203,101 @@ public class FinalizarEmprestimoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarjButtonActionPerformed
 
     private void finalizarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarjButtonActionPerformed
-       try {
+        try {
             Emprestimo aux = (Emprestimo) this.jList1.getSelectedValue();
-            if (aux != null){
+
+            if (aux != null) {
                 aux.atualizarEstado();
-                if(aux.getEstado().equals("ATRASADO")){
+
+                if (aux.getEstado().equals("ATRASADO")) {
                     aux.getUsuario().atualiaEstado();
-                    
                     int diasAtrasados = aux.autalizar_E_Pegar_Dias_Atrasados();
                     aux.setDiasAtrasados(diasAtrasados);
                     Date vaiFicarBloqueado = new Date();
                     vaiFicarBloqueado.setTime(vaiFicarBloqueado.getTime() + (Constans.DIAS_BLOQUEADOS * diasAtrasados * 86400000));
                     aux.getUsuario().setBloqueadoAte(vaiFicarBloqueado);
                     SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
-                    
-                    JOptionPane.showMessageDialog(null, "Devido seu atraso de " + diasAtrasados + " dias na entrega do" +
-                            " livro, sua conta ficarar suspensa até o dia: " + data.format(vaiFicarBloqueado));
-                    if (aux.getUsuario() instanceof Funcionario){
+
+                    JOptionPane.showMessageDialog(null, "Devido seu atraso de " + diasAtrasados + " dias na entrega do"
+                            + " livro, sua conta ficarar suspensa até o dia: " + data.format(vaiFicarBloqueado));
+                    if (aux.getUsuario() instanceof Funcionario) {
                         bibliotecaDAO.editFuncionarios((Funcionario) aux.getUsuario());
-                    }else if (aux.getUsuario() instanceof Aluno){
+                    } else if (aux.getUsuario() instanceof Aluno) {
                         bibliotecaDAO.editAlunos((Aluno) aux.getUsuario());
                     }
                 }
+
                 List<Exemplares> exemplares;
-           
                 exemplares = bibliotecaDAO.getExemplares();
-                
-                for(Exemplares i : exemplares){
-                    if(i.getLivro().equals(aux.getExemplares().getLivro())){
+
+                for (Exemplares i : exemplares) {
+                    if (i.getLivro().equals(aux.getExemplares().getLivro())) {
                         i.setQuantidade_Disponivel(i.getQuantidade_Disponivel() + 1);
                         bibliotecaDAO.editExemplares(i);
                         break;
                     }
                 }
+
                 List<Emprestimo> minhaLista = aux.getUsuario().getEmprestimo();
-                for(Emprestimo i : minhaLista) {
-                    if(i.hashCode() == aux.hashCode()){
+                for (Emprestimo i : minhaLista) {
+                    if (i.hashCode() == aux.hashCode()) {
                         minhaLista.remove(i);
                         break;
                     }
                 }
-                if(aux.getUsuario() instanceof Funcionario){
+
+                if (aux.getUsuario() instanceof Funcionario) {
                     bibliotecaDAO.editFuncionarios((Funcionario) aux.getUsuario());
-                }else if( aux.getUsuario() instanceof Aluno){
+                } else if (aux.getUsuario() instanceof Aluno) {
                     bibliotecaDAO.editAlunos((Aluno) aux.getUsuario());
-                }    
+                }
+
                 JOptionPane.showMessageDialog(null, "Emprestimo Finalizado Com sucesso ");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "É necessário selecionar o emprestimo a ser finalizado ");
             }
-            
-            DefaultListModel<Emprestimo> 
-            listanova = null;
+
+            DefaultListModel<Emprestimo> listanova = null;
             List<Emprestimo> emp = null;
-            if (this.usuariojCheckBox.isSelected() && this.livrojCheckBox.isSelected()){
+
+            if (this.usuariojCheckBox.isSelected() && this.livrojCheckBox.isSelected()) {
                 emp = this.finalizarEmprestimoControl.procurarGeral(this.procurarjTextField.getText());
-            }else if (this.usuariojCheckBox.isSelected()){
+            } else if (this.usuariojCheckBox.isSelected()) {
                 emp = this.finalizarEmprestimoControl.procurarUsuario(this.procurarjTextField.getText());
-            }else if (this.livrojCheckBox.isSelected()){
+            } else if (this.livrojCheckBox.isSelected()) {
                 emp = this.finalizarEmprestimoControl.procurarLivro(this.procurarjTextField.getText());
-            }else{
+            } else {
                 listanova = new DefaultListModel<>();
                 int contador = 0;
-                for(int i = 0; i < jList1.getModel().getSize(); i++){
-                    if(!jList1.getModel().getElementAt(i).equals(aux)){
-                       listanova.addElement((Emprestimo) jList1.getModel().getElementAt(i));
-                       if (contador == 1){
-                           break;
-                       }
-                    }else{
+
+                for (int i = 0; i < jList1.getModel().getSize(); i++) {
+                    if (!jList1.getModel().getElementAt(i).equals(aux)) {
+                        listanova.addElement((Emprestimo) jList1.getModel().getElementAt(i));
+
+                        if (contador == 1) {
+                            break;
+                        }
+
+                    } else {
                         contador += 1;
                     }
                 }
             }
-            
-            if (emp != null){  
+
+            if (emp != null) {
                 DefaultListModel<Emprestimo> nova = new DefaultListModel<>();
-                for(Emprestimo i : emp){
+                
+                for (Emprestimo i : emp) {
                     nova.addElement(i);
                 }
+                
                 this.jList1.setModel(nova);
-            }else if (listanova != null ){
+            } else if (listanova != null) {
                 this.jList1.setModel(listanova);
             }
-            
+
         } catch (IOException | ClassNotFoundException ex) {
-               JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_finalizarjButtonActionPerformed
 
@@ -303,55 +312,56 @@ public class FinalizarEmprestimoFrame extends javax.swing.JFrame {
     private void procurarjButton1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjButton1ActionPerformed1
         try {
             List<Emprestimo> emp;
-            if(this.procurarjTextField.getText() == null || this.procurarjTextField.getText().equals("")){
+            
+            if (this.procurarjTextField.getText() == null || this.procurarjTextField.getText().equals("")) {
                 emp = this.finalizarEmprestimoControl.procurarGeral();
-            }else{
-                if (this.usuariojCheckBox.isSelected() && this.livrojCheckBox.isSelected()){
-                    emp = this.finalizarEmprestimoControl.procurarGeral(this.procurarjTextField.getText());
-                }else if (this.usuariojCheckBox.isSelected()){
-                    emp = this.finalizarEmprestimoControl.procurarUsuario(this.procurarjTextField.getText());
-                }else if (this.livrojCheckBox.isSelected()){
-                    emp = this.finalizarEmprestimoControl.procurarLivro(this.procurarjTextField.getText());
-                }else{
-                    emp = new ArrayList<>();
-                }
+            } else if (this.usuariojCheckBox.isSelected() && this.livrojCheckBox.isSelected()) {
+                emp = this.finalizarEmprestimoControl.procurarGeral(this.procurarjTextField.getText());
+            } else if (this.usuariojCheckBox.isSelected()) {
+                emp = this.finalizarEmprestimoControl.procurarUsuario(this.procurarjTextField.getText());
+            } else if (this.livrojCheckBox.isSelected()) {
+                emp = this.finalizarEmprestimoControl.procurarLivro(this.procurarjTextField.getText());
+            } else {
+                emp = new ArrayList<>();
             }
-            if (emp != null){  
+            
+            if (emp != null) {
                 DefaultListModel<Emprestimo> aux = new DefaultListModel<>();
-                for(Emprestimo i : emp){
+                for (Emprestimo i : emp) {
                     aux.addElement(i);
                 }
                 this.jList1.setModel(aux);
             }
         } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-            } catch (ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_procurarjButton1ActionPerformed1
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-       if(this.jList1.getSelectedValue() != null){
-           this.finalizarjButton.setEnabled(true);
-           this.jLabel2.setEnabled(true);
-           Emprestimo aux = (Emprestimo) this.jList1.getSelectedValue();
-           this.jLabel2.setText(aux.getEstado());
-           if(aux.getEstado().equals("ATRASADO")){
-               this.finalizarjButton.setEnabled(true);
-               this.jLabel2.setForeground(Color.RED);
-               aux.atualizarEstado();
-               aux.getUsuario().set_Estado_Entregar_Livro_Atasado(aux);
-           }else if(aux.getEstado().equals("EM ANDAMENTO")){
-               this.finalizarjButton.setEnabled(true);
-               this.jLabel2.setForeground(Color.BLUE);
-               aux.atualizarEstado();
-           }else if(aux.getEstado().equals("CONCLUIDO")){
-               this.finalizarjButton.setEnabled(false);
-           }
-       }else{
-           this.jLabel2.setEnabled(false);
-           this.jLabel2.setForeground(Color.BLACK);
-       }
+        if (this.jList1.getSelectedValue() != null) {
+            this.finalizarjButton.setEnabled(true);
+            this.jLabel2.setEnabled(true);
+            Emprestimo aux = (Emprestimo) this.jList1.getSelectedValue();
+            this.jLabel2.setText(aux.getEstado());
+            
+            if (aux.getEstado().equals("ATRASADO")) {
+                this.finalizarjButton.setEnabled(true);
+                this.jLabel2.setForeground(Color.RED);
+                aux.atualizarEstado();
+                aux.getUsuario().set_Estado_Entregar_Livro_Atasado(aux);
+            } else if (aux.getEstado().equals("EM ANDAMENTO")) {
+                this.finalizarjButton.setEnabled(true);
+                this.jLabel2.setForeground(Color.BLUE);
+                aux.atualizarEstado();
+            } else if (aux.getEstado().equals("CONCLUIDO")) {
+                this.finalizarjButton.setEnabled(false);
+            }
+        } else {
+            this.jLabel2.setEnabled(false);
+            this.jLabel2.setForeground(Color.BLACK);
+        }
     }//GEN-LAST:event_jList1MouseClicked
 
     private void procurarjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjTextFieldActionPerformed

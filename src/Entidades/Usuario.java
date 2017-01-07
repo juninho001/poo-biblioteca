@@ -11,17 +11,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-/** 
- * @version 1.5
- * @author Wensttay
- * Classe que define um usuario
+/**
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
-public abstract class Usuario implements Serializable, Comparable<Usuario>{
-    private String              nome, endereco, email, matricula, CPF, telefone, senha, estado;
-    private int                 limite_Livros, limite_Dias;
-    private Date                bloqueadoAte;
-    private List<Emprestimo>    emprestimo;
-    
+public abstract class Usuario implements Serializable, Comparable<Usuario> {
+
+    private String nome, endereco, email, matricula, CPF, telefone, senha, estado;
+    private int limite_Livros, limite_Dias;
+    private Date bloqueadoAte;
+    private List<Emprestimo> emprestimo;
+
     /**
      * @param nome - Nome do Usuario
      * @param endereco - Endereço do Usuario
@@ -30,80 +31,81 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
      * @param CPF - CPF do Usuario
      * @param telefone - Telefone do Usuario
      * @param senha - Senha do Usuario
-     * @param limite_Dias - Quantidade Limite de dias que se pode ficar com um livro do Usuario
+     * @param limite_Dias - Quantidade Limite de dias que se pode ficar com um
+     * livro do Usuario
      */
     public Usuario(String nome, String endereco, String email, String matricula, String CPF, String telefone, String senha, int limite_Dias) {
-        this.nome           = nome;
-        this.endereco       = endereco;
-        this.email          = email;
-        this.matricula      = matricula;
-        this.CPF            = CPF;
-        this.telefone       = telefone;
-        this.senha          = senha;
-        this.limite_Livros  = Constans.DIAS_BLOQUEADOS;
-        this.limite_Dias    = limite_Dias;
-        this.emprestimo     = new ArrayList<>();
-        this.bloqueadoAte   = null;
-        this.estado         = "DESBLOQUEADO";
+        this.nome = nome;
+        this.endereco = endereco;
+        this.email = email;
+        this.matricula = matricula;
+        this.CPF = CPF;
+        this.telefone = telefone;
+        this.senha = senha;
+        this.limite_Livros = Constans.DIAS_BLOQUEADOS;
+        this.limite_Dias = limite_Dias;
+        this.emprestimo = new ArrayList<>();
+        this.bloqueadoAte = null;
+        this.estado = "DESBLOQUEADO";
     }
-    
-    public void set_Estado_Entregar_Livro_Atasado(Emprestimo emprestimo){
+
+    public void set_Estado_Entregar_Livro_Atasado(Emprestimo emprestimo) {
         this.estado = "BLOQUEADO";
         Date antigoBloqueadoAte = this.bloqueadoAte;
-        if(antigoBloqueadoAte == null){
+        if (antigoBloqueadoAte == null) {
             emprestimo.atualizarEstado();
             Date novobloqueadoAte = new Date();
-            novobloqueadoAte.setTime(novobloqueadoAte.getTime() + (emprestimo.getDiasAtrasados() * 86400000) );
+            novobloqueadoAte.setTime(novobloqueadoAte.getTime() + (emprestimo.getDiasAtrasados() * 86400000));
             this.bloqueadoAte = novobloqueadoAte;
-        }else{
+        } else {
             this.bloqueadoAte.setTime(this.bloqueadoAte.getTime() + (emprestimo.getDiasAtrasados() * 86400000));
         }
     }
-   
-    public void atualiaEstado(){
+
+    public void atualiaEstado() {
         Date hoje = new Date();
-        if (this.bloqueadoAte != null && this.bloqueadoAte.getTime() > hoje.getTime() - Constans.ATRAZO_PADRAO){
+        if (this.bloqueadoAte != null && this.bloqueadoAte.getTime() > hoje.getTime() - Constans.ATRAZO_PADRAO) {
             this.estado = "BLOQUEADO";
-        }else if (this.emprestimo != null && this.emprestimo.size() > 0){
-            for(Emprestimo i : this.emprestimo){
-                if  (i.getEstado().equals("ATRASADO")){
+        } else if (this.emprestimo != null && this.emprestimo.size() > 0) {
+            for (Emprestimo i : this.emprestimo) {
+                if (i.getEstado().equals("ATRASADO")) {
                     this.estado = "BLOQUEADO";
                     break;
                 }
             }
-        }else{
+        } else {
             this.bloqueadoAte = null;
             this.estado = "DESBLOQUEADO";
         }
     }
-    
+
     /**
-     * 
-     * @return Uma descrição completa do Usuario 
+     *
+     * @return Uma descrição completa do Usuario
      */
     @Override
-    public String toString(){
-        return "Nome: "         + this.getNome()         + "\n" +
-               "Matrícula: "    + this.getMatricula()    + "\n" +
-               "CPF: "          + this.getCPF()          + "\n" +
-               "Endereço: "     + this.getEndereco()     + "\n" +
-               "Email: "        + this.getEmail()        + "\n" +
-               "Telefone: "     + this.getTelefone()     + "\n";
+    public String toString() {
+        return "Nome: " + this.getNome() + "\n"
+                + "Matrícula: " + this.getMatricula() + "\n"
+                + "CPF: " + this.getCPF() + "\n"
+                + "Endereço: " + this.getEndereco() + "\n"
+                + "Email: " + this.getEmail() + "\n"
+                + "Telefone: " + this.getTelefone() + "\n";
     }
-    
+
     /**
-     * 
+     *
      * @param outro - Outro usuario a ser comparado
      * @return Retorna "true" se forem iguais e "false" se forem diferentes
      */
     @Override
-    public boolean equals(Object outro){
-        if ((this == null) || (outro == null)){
+    public boolean equals(Object outro) {
+        if ((this == null) || (outro == null)) {
             return false;
         }
-        if (outro instanceof Usuario){
+        if (outro instanceof Usuario) {
             Usuario aux = (Usuario) outro;
-            if (this.getCPF().equals(aux.getCPF()) || this.matricula.equals(aux.getMatricula())){
+            if (this.getCPF().equals(aux.getCPF()) || this.matricula.equals(aux.getMatricula())) {
                 return true;
             }
         }
@@ -111,8 +113,8 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
     }
 
     /**
-     * 
-     * @return  Retorna um numero que representa o usuario 
+     *
+     * @return Retorna um numero que representa o usuario
      */
     @Override
     public int hashCode() {
@@ -120,11 +122,11 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
         hash = 83 * hash + Objects.hashCode(this.getCPF());
         return hash;
     }
-    
+
     /**
-     * 
-     * @return Retorna 0 se forem iguais, 1 se este for maior e -1 se o "Outro" for maior
-     * Metodo para a Organizao das Listas
+     *
+     * @return Retorna 0 se forem iguais, 1 se este for maior e -1 se o "Outro"
+     * for maior Metodo para a Organizao das Listas
      */
     @Override
     public int compareTo(Usuario outro) {
@@ -181,7 +183,8 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
     }
 
     /**
-     * @return O estado do usuario perante o sistema, pode ser "BLOQUEADO" ou "DESBLOQUEADO"
+     * @return O estado do usuario perante o sistema, pode ser "BLOQUEADO" ou
+     * "DESBLOQUEADO"
      */
     public String getEstado() {
         return estado;
@@ -265,14 +268,16 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
     }
 
     /**
-     * @param estado o estato a ser dado ao usuaro, pode ser "BLOQUEADO" ou "DESBLOQUEADO"
+     * @param estado o estato a ser dado ao usuaro, pode ser "BLOQUEADO" ou
+     * "DESBLOQUEADO"
      */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
     /**
-     * @param limite_Livros o limite de livros para empresto simutaneo do usuario
+     * @param limite_Livros o limite de livros para empresto simutaneo do
+     * usuario
      */
     public void setLimite_Livros(int limite_Livros) {
         this.limite_Livros = limite_Livros;
@@ -298,6 +303,5 @@ public abstract class Usuario implements Serializable, Comparable<Usuario>{
     public void setEmprestimo(List<Emprestimo> emprestimo) {
         this.emprestimo = emprestimo;
     }
-    
-   
+
 }

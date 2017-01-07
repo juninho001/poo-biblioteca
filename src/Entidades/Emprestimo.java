@@ -12,68 +12,71 @@ import java.util.Objects;
 
 /**
  * @version 1.0
- * @author Wensttay
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
-public class Emprestimo implements Serializable, Comparable<Emprestimo>{
-    private Usuario             usuario;
-    private Exemplares          exemplares;
-    private Date                dia_Emprestimo, dia_Pra_Entregar, dia_Entrege;
-    private String              estado;
-    private int                 diasAtrasados;
-    
+public class Emprestimo implements Serializable, Comparable<Emprestimo> {
+
+    private Usuario usuario;
+    private Exemplares exemplares;
+    private Date dia_Emprestimo, dia_Pra_Entregar, dia_Entrege;
+    private String estado;
+    private int diasAtrasados;
+
     /**
-     * 
+     *
      * @param usuario O usuario a realizar o emprestimo
      * @param exemplares O exemplar a ser emprestado
      */
-    public Emprestimo (Usuario usuario, Exemplares exemplares){
-        this.usuario            = usuario;
-        this.exemplares         = exemplares;
-        this.dia_Emprestimo     = new Date();
-        this.dia_Pra_Entregar   = new Date();
-        this.dia_Pra_Entregar.setTime( dia_Pra_Entregar.getTime() + 
-                                 (Constans.UM_DIA * usuario.getLimite_Dias()) );
+    public Emprestimo(Usuario usuario, Exemplares exemplares) {
+        this.usuario = usuario;
+        this.exemplares = exemplares;
+        this.dia_Emprestimo = new Date();
+        this.dia_Pra_Entregar = new Date();
+        this.dia_Pra_Entregar.setTime(dia_Pra_Entregar.getTime()
+                + (Constans.UM_DIA * usuario.getLimite_Dias()));
         this.atualizarEstado();
         this.diasAtrasados = 0;
     }
-    
+
     /**
-     * Atualiza o estdo atual do emprestimo.
-     * Se o dia entrege for null ou se a data de agora for maior que a data
-     * definida a ser entregado, define como "ATRASADO".
-     * Se o dia entrege for null ou se a data de agora for menor que a data
-     * definida a ser entregado, difine como "EM ANDAMENTO" 
+     * Atualiza o estdo atual do emprestimo. Se o dia entrege for null ou se a
+     * data de agora for maior que a data definida a ser entregado, define como
+     * "ATRASADO". Se o dia entrege for null ou se a data de agora for menor que
+     * a data definida a ser entregado, difine como "EM ANDAMENTO"
      */
     public void atualizarEstado() {
         Date agora = new Date();
-        if (this.dia_Entrege == null && agora.getTime()  - Constans.ATRAZO_PADRAO > this.getDia_Pra_Entregar().getTime()){
+        if (this.dia_Entrege == null && agora.getTime() - Constans.ATRAZO_PADRAO > this.getDia_Pra_Entregar().getTime()) {
             this.setEstado("ATRASADO");
             this.diasAtrasados = ((int) ((agora.getTime() - this.dia_Pra_Entregar.getTime()) / Constans.UM_DIA));
-        } else if(dia_Entrege == null && agora.getTime() < this.getDia_Pra_Entregar().getTime() ){
+        } else if (dia_Entrege == null && agora.getTime() < this.getDia_Pra_Entregar().getTime()) {
             this.setEstado("EM ANDAMENTO");
             this.diasAtrasados = 0;
-        } else if(this.dia_Entrege != null){
+        } else if (this.dia_Entrege != null) {
             this.diasAtrasados = 0;
             this.setEstado("CONCLUIDO");
         }
     }
+
     /**
-     * 
-     * @return retorna uma descrição completa do emprestimo 
+     *
+     * @return retorna uma descrição completa do emprestimo
      */
     @Override
-    public String toString(){
+    public String toString() {
         SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
-        return "O usuario:  " + this.getUsuario().getNome() +
-               "\n   Fez o emprestimo do livro: \n" + this.getExemplares().getLivro().toString() +
-               "\n   No dia: \n   " + data.format(this.getDia_Emprestimo()) + 
-               "\n   E deverá entragar até o dia: \n   " + data.format(this.getDia_Pra_Entregar());
+        return "O usuario:  " + this.getUsuario().getNome()
+                + "\n   Fez o emprestimo do livro: \n" + this.getExemplares().getLivro().toString()
+                + "\n   No dia: \n   " + data.format(this.getDia_Emprestimo())
+                + "\n   E deverá entragar até o dia: \n   " + data.format(this.getDia_Pra_Entregar());
     }
-    
+
     /**
-     * 
+     *
      * @param outro o outro emprestimo a ser comparado
-     * @return retorna 0 se forem iguais, 1 se este for maior e -1 se o outro for maior
+     * @return retorna 0 se forem iguais, 1 se este for maior e -1 se o outro
+     * for maior
      */
     @Override
     public int compareTo(Emprestimo outro) {
@@ -81,8 +84,8 @@ public class Emprestimo implements Serializable, Comparable<Emprestimo>{
     }
 
     /**
-     * 
-     * @return retorna uma representação numerica deste emprestimo  
+     *
+     * @return retorna uma representação numerica deste emprestimo
      */
     @Override
     public int hashCode() {
@@ -95,20 +98,22 @@ public class Emprestimo implements Serializable, Comparable<Emprestimo>{
         hash = 47 * hash + Objects.hashCode(this.getEstado());
         return hash;
     }
-    
+
     /**
-     * 
+     *
      * @param outro outro emprestimo a ser comparado
      * @return retorna true se forem iguais e false se forem diferentes
      */
     @Override
-    public boolean equals(Object outro){
-        if(this == null || outro == null){
+    public boolean equals(Object outro) {
+        if (this == null || outro == null) {
             return false;
         }
-        if(this.hashCode() == outro.hashCode()){
+        
+        if (this.hashCode() == outro.hashCode()) {
             return true;
         }
+        
         return false;
     }
 
@@ -203,11 +208,12 @@ public class Emprestimo implements Serializable, Comparable<Emprestimo>{
     public int getDiasAtrasados() {
         return diasAtrasados;
     }
-    
-    public int autalizar_E_Pegar_Dias_Atrasados(){
+
+    public int autalizar_E_Pegar_Dias_Atrasados() {
         atualizarEstado();
         return diasAtrasados;
     }
+
     /**
      * @param diasAtrasados the diasAtrasados to set
      */
@@ -215,4 +221,3 @@ public class Emprestimo implements Serializable, Comparable<Emprestimo>{
         this.diasAtrasados = diasAtrasados;
     }
 }
-

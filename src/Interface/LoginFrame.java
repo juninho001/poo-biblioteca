@@ -13,21 +13,22 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class LoginFrame extends javax.swing.JFrame {
-    
+
     private LoginControl loginControl;
     private GeralControl geralControl;
     private BibliotecaDAO bibliotecaDAO;
-    
+
     /**
      * Creates new form LoginFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivos 
+     *
+     * @throws IOException error de arquivos
      */
     public LoginFrame() throws IOException {
         initComponents();
@@ -160,30 +161,27 @@ public class LoginFrame extends javax.swing.JFrame {
         String login = loginjFormattedTextField.getText();
         char[] pwr = senhajPassword.getPassword();
         String senha = new String(pwr);
-        
-        
+
         try {
-            Funcionario aux = this.loginControl.logar_Funcionario(login,senha, this.bibliotecaDAO.getFuncionarios());
-            if(aux != null){
+            Funcionario aux = this.loginControl.logar_Funcionario(login, senha, this.bibliotecaDAO.getFuncionarios());
+            
+            if (aux != null) {
                 geralControl.setFuncionario_Logado(aux);
                 this.dispose();
-                LogadoFrame logadoFrame = new LogadoFrame(this.geralControl,this);
+                LogadoFrame logadoFrame = new LogadoFrame(this.geralControl, this);
                 logadoFrame.setVisible(true);
-            }else{
-                if(!this.loginControl.funcionario_Existe(login,senha, this.bibliotecaDAO.getFuncionarios())){
-                    JOptionPane.showMessageDialog(null,"Essa Conta Funcionario não Existe","Error",JOptionPane.ERROR_MESSAGE);
-                    this.senhajPassword.setText("");
-                    this.loginjFormattedTextField.setText("");
-                }else{
-                    JOptionPane.showMessageDialog(null,"Matricula ou Senha estão incorretos","Aviso",JOptionPane.WARNING_MESSAGE);
-                }  
+            } else if (!this.loginControl.funcionario_Existe(login, senha, this.bibliotecaDAO.getFuncionarios())) {
+                JOptionPane.showMessageDialog(null, "Essa Conta Funcionario não Existe", "Error", JOptionPane.ERROR_MESSAGE);
+                this.senhajPassword.setText("");
+                this.loginjFormattedTextField.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Matricula ou Senha estão incorretos", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-                
     }//GEN-LAST:event_enviarjButtonActionPerformed
 
     private void apagarSenha(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_apagarSenha
@@ -191,10 +189,11 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_apagarSenha
 
     private void senhajPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhajPasswordKeyTyped
-       int tamanho = senhajPassword.getText().length();
-       if(tamanho > Constans.TAMANHO_DE_SENHA){
-           evt.consume();
-       }
+        int tamanho = senhajPassword.getText().length();
+        
+        if (tamanho > Constans.TAMANHO_DE_SENHA) {
+            evt.consume();
+        }
     }//GEN-LAST:event_senhajPasswordKeyTyped
 
     private void senhajPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhajPasswordActionPerformed

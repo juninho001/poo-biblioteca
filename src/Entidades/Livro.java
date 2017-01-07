@@ -11,71 +11,74 @@ import java.util.Objects;
 
 /**
  * @version 1.0
- * @author Wensttay
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
-public class Livro implements Serializable, Comparable<Livro>{
-    private String          ISBN;
-    private String          titulo, editora, descricao;
-    private List<String>    autores;
-    private int             numero_Paginas;
-    
+public class Livro implements Serializable, Comparable<Livro> {
+
+    private String ISBN;
+    private String titulo, editora, descricao;
+    private List<String> autores;
+    private int numero_Paginas;
+
     /**
-     * 
-     * @param ISBN - ISBN (International Standard Book Number) do livro   
-     * @param titulo - Titluo do livro 
+     *
+     * @param ISBN - ISBN (International Standard Book Number) do livro
+     * @param titulo - Titluo do livro
      * @param autores - Lista com autores do livro
-     * @param editora - Editora do livro    
+     * @param editora - Editora do livro
      * @param descricao - Descricao do livro
      * @param numero_Paginas - Numero de Paginas do livro
      */
-    public Livro(String ISBN, String titulo, List<String> autores, String editora, String descricao, int numero_Paginas){
-        this.ISBN               = ISBN;
-        this.titulo             = titulo;
-        this.autores            = autores;
-        this.editora            = editora;
-        this.descricao          = descricao;
-        this.numero_Paginas     = numero_Paginas;
+    public Livro(String ISBN, String titulo, List<String> autores, String editora, String descricao, int numero_Paginas) {
+        this.ISBN = ISBN;
+        this.titulo = titulo;
+        this.autores = autores;
+        this.editora = editora;
+        this.descricao = descricao;
+        this.numero_Paginas = numero_Paginas;
     }
 
     /**
-     * 
-     * @return Uma string que descreve o livro 
+     *
+     * @return Uma string que descreve o livro
      */
     @Override
     public String toString() {
         String autoria = "";
-        for(String autor : this.getAutores()){
+        for (String autor : this.getAutores()) {
             autoria += autor + ";  ";
         }
-        return "  |  Título: "               + this.getTitulo()          + "\n" +
-               "  |  Descrição :"            + this.getDescricao()       + "\n" +
-               "  |  Autores: "              + autoria                   + "\n" +
-               "  |  Número de Páginas: "    + this.getNumero_Paginas()  + "\n" +
-               "  |  Editora: "              + this.getEditora()         + "\n" + 
-               "  |  ISBN: "                 + this.getISBN()            + "\n";
+        return "  |  Título: " + this.getTitulo() + "\n"
+                + "  |  Descrição :" + this.getDescricao() + "\n"
+                + "  |  Autores: " + autoria + "\n"
+                + "  |  Número de Páginas: " + this.getNumero_Paginas() + "\n"
+                + "  |  Editora: " + this.getEditora() + "\n"
+                + "  |  ISBN: " + this.getISBN() + "\n";
     }
+
     /**
-     * 
+     *
      * @param outro - Outro livro que vai ser comparado a esse
      * @return retorna true se forem iguais e false se forem diferentes
      */
     @Override
-    public boolean equals (Object outro){
-        if ((this == null) || (outro == null)){
+    public boolean equals(Object outro) {
+        if ((this == null) || (outro == null)) {
             return false;
         }
-        if (outro instanceof Livro){
+        if (outro instanceof Livro) {
             Livro aux = (Livro) outro;
-            if(hashCode() == aux.hashCode()){
-                    return true;
+            if (hashCode() == aux.hashCode()) {
+                return true;
             }
         }
         return false;
     }
-    
+
     /**
-     * 
-     * @return um numero que representa esse livro 
+     *
+     * @return um numero que representa esse livro
      */
     @Override
     public int hashCode() {
@@ -88,10 +91,10 @@ public class Livro implements Serializable, Comparable<Livro>{
     }
 
     /**
-     * 
+     *
      * @param outro um outro livro a ser comparado
-     * @return retorna 0 se forem iguais, 1 se esse for maior e -1 se o outro for maior
-     * Metodo para a Organizao das Listas
+     * @return retorna 0 se forem iguais, 1 se esse for maior e -1 se o outro
+     * for maior Metodo para a Organizao das Listas
      */
     @Override
     public int compareTo(Livro outro) {
@@ -182,6 +185,4 @@ public class Livro implements Serializable, Comparable<Livro>{
         this.numero_Paginas = numero_Paginas;
     }
 
-    
 }
-    

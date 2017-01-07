@@ -14,19 +14,21 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wensttay
+ * @version 1.0
+ * @author wensttay <yattsnew@gmail.com>
+ * @date 07/01/2017 - 12:01:31
  */
 public class AdicionarExemplarFrame extends javax.swing.JFrame {
-    
+
     AdicionarExemplarControl adicionarExemplarControl;
     BibliotecaDAO bibliotecaDAO;
+
     /**
      * Creates new form AddLivroFrame
      */
     /**
-     * 
-     * @throws IOException error de arquivo 
+     *
+     * @throws IOException error de arquivo
      */
     public AdicionarExemplarFrame() throws IOException {
         initComponents();
@@ -280,27 +282,26 @@ public class AdicionarExemplarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ISBNjTextFieldjTextField1ActionPerformed
 
     private void adicionarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarjButtonActionPerformed
-        if (this.ISBNjTextField.getText() == null || this.ISBNjTextField.getText().equals("") || 
-                this.numero_De_ExemplaresjFormattedTextField.getText() == null || this.numero_De_ExemplaresjFormattedTextField.getText().equals("") ||
-                this.numero_De_PginasjFormattedTextField.getText() == null || this.numero_De_PginasjFormattedTextField.getText().equals("") ||
-                this.titulojTextField.getText() == null || this.titulojTextField.getText().equals("")){
+        if (this.ISBNjTextField.getText() == null || this.ISBNjTextField.getText().equals("")
+                || this.numero_De_ExemplaresjFormattedTextField.getText() == null || this.numero_De_ExemplaresjFormattedTextField.getText().equals("")
+                || this.numero_De_PginasjFormattedTextField.getText() == null || this.numero_De_PginasjFormattedTextField.getText().equals("")
+                || this.titulojTextField.getText() == null || this.titulojTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Os Campos Título, ISBN, Numero de Exemplares e Numero de Paginas são Obrigatorios");
-        }else{
+        } else {
             try {
-                List<String> autores = this.adicionarExemplarControl.separar_Altores(this.altoresjTextArea.getText());
-                
-                int numeroDePaginas = Integer.parseInt(this.numero_De_PginasjFormattedTextField.getText());
-                
-                
-                Livro novoLivro = new Livro(this.ISBNjTextField.getText(), this.titulojTextField.getText(), autores,
-                                            this.editorajTextField.getText(), this.descricaojTextArea.getText(), numeroDePaginas);
-                
-                int numeroDeExemplares = Integer.parseInt(this.numero_De_ExemplaresjFormattedTextField.getText());
-                
+                List<String> autores = 
+                        this.adicionarExemplarControl.separar_Altores(this.altoresjTextArea.getText());
+                int numeroDePaginas = 
+                        Integer.parseInt(this.numero_De_PginasjFormattedTextField.getText());
+                Livro novoLivro = 
+                        new Livro(this.ISBNjTextField.getText(), 
+                                this.titulojTextField.getText(), autores,
+                                this.editorajTextField.getText(), 
+                                this.descricaojTextArea.getText(), numeroDePaginas);
+                int numeroDeExemplares = 
+                        Integer.parseInt(this.numero_De_ExemplaresjFormattedTextField.getText());
                 Exemplares novoExemplar = new Exemplares(novoLivro, numeroDeExemplares);
-                
                 this.bibliotecaDAO.addExemplares(novoExemplar);
-                
                 this.ISBNjTextField.setText("");
                 this.titulojTextField.setText("");
                 this.descricaojTextArea.setText("");
@@ -308,7 +309,7 @@ public class AdicionarExemplarFrame extends javax.swing.JFrame {
                 this.editorajTextField.setText("");
                 this.numero_De_ExemplaresjFormattedTextField.setText("");
                 this.numero_De_PginasjFormattedTextField.setText("");
-                
+
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException ex) {
@@ -326,19 +327,19 @@ public class AdicionarExemplarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarjButtonActionPerformed
 
     private void altoresjTextAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_altoresjTextAreaMouseClicked
-        if(this.altoresjTextArea.getText().equals("Entre cada autor coloque ponto e \n" +"virgula\n" + "")){
+        if (this.altoresjTextArea.getText().equals("Entre cada autor coloque ponto e \n" + "virgula\n" + "")) {
             this.altoresjTextArea.setText("");
         }
     }//GEN-LAST:event_altoresjTextAreaMouseClicked
 
     private void altoresjTextAreaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_altoresjTextAreaMouseExited
-        if(this.altoresjTextArea.getText().equals("")){
-            this.altoresjTextArea.setText("Entre cada autor coloque ponto e \n" +"virgula\n" + "");
+        if (this.altoresjTextArea.getText().equals("")) {
+            this.altoresjTextArea.setText("Entre cada autor coloque ponto e \n" + "virgula\n" + "");
         }
     }//GEN-LAST:event_altoresjTextAreaMouseExited
 
     private void altoresjTextAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altoresjTextAreaKeyPressed
-        if(this.altoresjTextArea.getText().equals("Entre cada autor coloque ponto e \n" +"virgula\n" + "")){
+        if (this.altoresjTextArea.getText().equals("Entre cada autor coloque ponto e \n" + "virgula\n" + "")) {
             this.altoresjTextArea.setText("");
         }
     }//GEN-LAST:event_altoresjTextAreaKeyPressed
