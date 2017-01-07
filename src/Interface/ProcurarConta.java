@@ -43,7 +43,7 @@ public class ProcurarConta extends javax.swing.JFrame {
         for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        
+
         for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
@@ -59,11 +59,11 @@ public class ProcurarConta extends javax.swing.JFrame {
         for (String i : Constans.CARGOS) {
             this.cargojComboBox.addItem(i);
         }
-        
+
         for (String i : Constans.SETORES) {
             this.setorjComboBox.addItem(i);
         }
-        
+
         for (String i : Constans.CURSOS) {
             this.cursojComboBox.addItem(i);
         }
@@ -384,7 +384,7 @@ public class ProcurarConta extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         this.salvarjButton.setEnabled(false);
         this.editarjButton.setEnabled(false);
         this.alterar_SenhajButton.setEnabled(false);
@@ -431,7 +431,7 @@ public class ProcurarConta extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Operação Cancelada");
                 }
-            
+
             } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado", "File Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -440,7 +440,7 @@ public class ProcurarConta extends javax.swing.JFrame {
                 int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir a conta: "
                         + this.procurarContaControl.getUsuario().getNome() + " ?",
                         "Aviso", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION, null);
-                
+
                 if (resposta == 0) {
                     if (this.procurarContaControl.getUsuario() instanceof Funcionario) {
                         this.bibliotecaDAO.removeFuncionario((Funcionario) this.procurarContaControl.getUsuario());
@@ -556,7 +556,7 @@ public class ProcurarConta extends javax.swing.JFrame {
     private void procurarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarjButtonActionPerformed
         try {
             Funcionario aux = this.procurarContaControl.procurarFuncionario(this.CPFjFormattedTextField.getText());
-            
+
             if (aux != null) {
                 procurarContaControl.setUsuario(aux);
                 this.nomejTextField1.setText(aux.getNome());
@@ -571,7 +571,7 @@ public class ProcurarConta extends javax.swing.JFrame {
                         break;
                     }
                 }
-            
+
                 for (String i : Constans.SETORES) {
                     if (aux.getSetor().equals(i)) {
                         this.setorjComboBox.setSelectedItem(i);
@@ -583,7 +583,7 @@ public class ProcurarConta extends javax.swing.JFrame {
                 this.alterar_SenhajButton.setEnabled(true);
             } else {
                 Aluno aux2 = this.procurarContaControl.procurarAluno(this.CPFjFormattedTextField.getText());
-                
+
                 if (aux2 != null) {
                     procurarContaControl.setUsuario(aux2);
                     this.nomejTextField1.setText(aux2.getNome());
@@ -598,7 +598,7 @@ public class ProcurarConta extends javax.swing.JFrame {
                             break;
                         }
                     }
-                
+
                     this.editarjButton.setEnabled(true);
                     this.excluirjButton.setEnabled(true);
                     this.alterar_SenhajButton.setEnabled(true);

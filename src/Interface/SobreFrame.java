@@ -8,7 +8,7 @@ package Interface;
 /**
  * @version 1.0
  * @author wensttay <yattsnew@gmail.com>
- * @date   07/01/2017 - 12:01:31
+ * @date 07/01/2017 - 12:01:31
  */
 public class SobreFrame extends javax.swing.JFrame {
 

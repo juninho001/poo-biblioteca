@@ -39,3 +39,6 @@ As principais entidades manipuladas pelo sistema são descritas a seguir. Podem 
 - Usar interface gráfica swing
 - A persistência dos dados deve ser feito usando arquivos (obrigatório)
 - Criar o JavaDoc do projeto
+
+# Preview
+![alt tag](https://github.com/wensttay/BibliotecaDaPOO/blob/master/preview.png)
